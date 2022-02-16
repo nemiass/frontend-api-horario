@@ -1,25 +1,72 @@
-import logo from './logo.svg';
-import './App.css';
+import Login from "./components/login";
+import React, { Component } from "react";
+import Home from './components/home';
+import "./bootstrap.min.css";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    id: false,
+    loged: false,
+    user: "",
+    password: "",
+    tipo: ""
+  }
+
+  componentDidMount() {
+    this.updateLogin();
+  }
+
+  updateLogin = () => {
+    this.setState({
+      id: localStorage.getItem("id") ?? false,
+      loged: localStorage.getItem("user") ?? false,
+      user: localStorage.getItem("password") ?? "",
+      password: localStorage.getItem("loged") ?? "",
+      tipo: localStorage.getItem("tipo") ?? ""
+    })
+  }
+
+  login = async (e) => {
+    const { user, password } = this.state;
+    const uri = `http://localhost:5001/api/validar/${user}/${password}`;
+    const response = await fetch(uri);
+    const data = await response.json();
+    console.log(data);
+
+    if (data.estado) {
+      const {id, user, password, tipo} = data.user;
+      localStorage.setItem("id", id);
+      localStorage.setItem("loged", true);
+      localStorage.setItem("user", user)
+      localStorage.setItem("password", password)
+      localStorage.setItem("tipo", tipo)
+
+      this.updateLogin()
+    }
+  }
+
+  logout = () => {
+    localStorage.clear()
+    this.updateLogin()
+  }
+
+  render() {
+    console.log(this.state)
+    if (!this.state.loged) {
+      return (
+        <Login
+          user={this.user}
+          login={this.login}
+          setState={this.setState.bind(this)}
+        />
+      )
+    }
+
+    return (
+      <Home user={this.state} logout={this.logout} />
+    )
+  }
 }
+
 
 export default App;
