@@ -6,12 +6,12 @@ import Mensajes from "./mensajes";
 export default class HomeAdmin extends Component {
 
     state = {
-        msg: "okokok"
+        msg: ""
     }
 
     createHorario = async (horario) => {
         try {
-            const url = "http://127.0.0.1:5000/api/horario";
+            const url = "http://54.242.117.184:3000/api/horario";
             const config = {
                 method: 'POST',
                 body: JSON.stringify(horario),
@@ -36,7 +36,7 @@ export default class HomeAdmin extends Component {
             headers: { 'Content-Type': 'application/json' }
         }
 
-        const response = await fetch("http://localhost:8000/api/docentes/guardar", config)
+        const response = await fetch("http://54.176.78.122:5000/api/docentes/guardar", config)
         const data = await response.json()
         if (data.estado) {
             alert("Docente creado correctamente")

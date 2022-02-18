@@ -17,7 +17,7 @@ export default class AgregarHorario extends Component {
     }
 
     traerDocentes = async () => {
-        const response = await fetch("http://localhost:8000/api/docentes")
+        const response = await fetch("http://54.176.78.122:5000/api/docentes")
         const data = await response.json()
         if (data.estado) {
             return data.user
@@ -26,7 +26,7 @@ export default class AgregarHorario extends Component {
     }
 
     traerCursos = async () => {
-        const response = await fetch("http://127.0.0.1:5000/api/cursos")
+        const response = await fetch("http://54.242.117.184:3000/api/cursos")
         const data = await response.json()
         if (data.estado) {
             return data.data
@@ -44,8 +44,8 @@ export default class AgregarHorario extends Component {
         console.log("estado:", this.state.horario)
     }
 
-    createHorario = (e) => {
-        this.props.createHorario(this.state.horario)
+    createHorario = async (e) => {
+        await this.props.createHorario(this.state.horario)
     }
 
     render() {

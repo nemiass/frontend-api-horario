@@ -13,9 +13,9 @@ export default class HomeProfesor extends Component {
 
     traerHorarios = async () => {
         const {id} = this.props.user
-        const res = await fetch(`http://127.0.0.1:5000/api/horario/${id}`)
+        const res = await fetch(`http://54.242.117.184:3000/api/horario/${id}`)
         const data = await res.json()
-        console.log(data)
+        console.log("Horario", data)
         if (data.estado) {
             this.setState({
                 horario: data

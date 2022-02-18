@@ -28,7 +28,7 @@ class App extends Component {
 
   login = async (e) => {
     const { user, password } = this.state;
-    const uri = `http://localhost:5001/api/validar/${user}/${password}`;
+    const uri = `http://54.234.31.116:3000/api/validar/${user}/${password}`;
     const response = await fetch(uri);
     const data = await response.json();
     console.log(data);
